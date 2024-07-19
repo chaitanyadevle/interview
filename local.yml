@@ -1,0 +1,33 @@
+version: "3.4"
+volumes:
+  pg_data: {}
+
+services:
+  postgres:
+    image: postgres:16.3-bookworm
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    env_file:
+      - ./environments/.env
+
+  app:
+    build:
+      context: .
+      args:
+        ENVIRONMENT: local
+    volumes:
+      - ./app:/app
+      - /tmp/:/tmp/
+    ports:
+      - "8080:8080"
+    restart: "always"
+    links:
+      - postgres
+    environment:
+      DJANGO_SETTINGS_MODULE: interview.settings.local
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8080"]
+
+networks:
+  default:
+    external:
+      name: interview-backend_default

@@ -1,0 +1,18 @@
+-r base.txt
+
+gunicorn
+
+coverage
+factory-boy
+ipython
+
+jedi
+django-debug-toolbar
+django-silk
+
+django-elasticsearch-dsl
+django-elasticsearch-dsl-drf
+elasticsearch
+
+django-tenant-schemas
+psutil
